@@ -17,10 +17,26 @@
       p {
         color: #555;
       }
+      button {
+        margin-top: 20px;
+        padding: 10px 20px;
+        font-size: 16px;
+        color: white;
+        background-color: #007bff;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+      }
+      button:hover {
+        background-color: #0056b3;
+      }
     </style>
   </head>
   <body>
     <h1>FastAPI로 만든 기본 페이지</h1>
     <p>환영합니다! FastAPI와 HTML이 연동되었습니다.</p>
+    <button onclick="window.location.href='/chatbot'">
+      챗봇 페이지로 이동
+    </button>
   </body>
 </html>

@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>챗봇</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #f4f4f9;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        height: 100vh;
+      }
+
+      h1 {
+        margin-top: 0;
+        color: #333;
+      }
+
+      #chat-container {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        width: 100%;
+        max-width: 500px;
+        height: 70%;
+        background-color: white;
+        border: 1px solid #ddd;
+        border-radius: 10px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      }
+
+      #chat-box {
+        padding: 10px;
+        overflow-y: auto;
+        flex-grow: 1;
+        border-bottom: 1px solid #ddd;
+      }
+
+      .message {
+        display: block;
+        margin: 10px 0;
+        max-width: 75%;
+        padding: 10px;
+        border-radius: 10px;
+        font-size: 14px;
+        line-height: 1.4;
+        word-wrap: break-word;
+      }
+
+      .user-message {
+        margin-left: auto;
+        background-color: #007bff;
+        color: white;
+        text-align: right;
+      }
+
+      .bot-message {
+        margin-right: auto;
+        background-color: #f1f0f0;
+        color: #333;
+      }
+
+      #chat-input {
+        display: flex;
+        align-items: center;
+        padding: 10px;
+      }
+
+      input[type="text"] {
+        flex-grow: 1;
+        padding: 10px;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        margin-right: 10px;
+        font-size: 14px;
+      }
+
+      button {
+        padding: 10px 15px;
+        font-size: 14px;
+        color: white;
+        background-color: #007bff;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+      }
+
+      button:hover {
+        background-color: #0056b3;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>알쏭달쏭 머니톡!</h1>
+    <div id="chat-container">
+      <div id="chat-box"></div>
+      <form id="chat-form" autocomplete="off">
+        <div id="chat-input">
+          <input
+            type="text"
+            id="user-input"
+            placeholder="메시지를 입력하세요"
+            required
+          />
+          <button type="submit">전송</button>
+        </div>
+      </form>
+    </div>
+
+    <script>
+      const chatBox = document.getElementById("chat-box");
+      const chatForm = document.getElementById("chat-form");
+      const userInput = document.getElementById("user-input");
+
+      chatForm.addEventListener("submit", async (event) => {
+        event.preventDefault();
+
+        const message = userInput.value;
+        if (!message) return;
+
+        // 사용자 메시지 추가
+        const userMessage = document.createElement("div");
+        userMessage.textContent = message;
+        userMessage.classList.add("message", "user-message");
+        chatBox.appendChild(userMessage);
+
+        // 서버 요청
+        const response = await fetch("/chatbot-response", {
+          method: "POST",
+          headers: { "Content-Type": "application/x-www-form-urlencoded" },
+          body: new URLSearchParams({ user_input: message }),
+        });
+        const botReply = await response.text();
+
+        // 챗봇 응답 추가
+        const botMessage = document.createElement("div");
+        botMessage.textContent = botReply;
+        botMessage.classList.add("message", "bot-message");
+        chatBox.appendChild(botMessage);
+
+        // 입력창 초기화 및 스크롤 이동
+        userInput.value = "";
+        chatBox.scrollTop = chatBox.scrollHeight;
+      });
+    </script>
+  </body>
+</html>
