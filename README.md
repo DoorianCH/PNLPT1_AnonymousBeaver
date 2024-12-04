@@ -29,3 +29,6 @@
 
 - 박소형:
 - 조은비:
+  - index.html 파일 생성
+  - script.js 파일 생성
+  - index.html -> chatbot.html 파일로 코드 이동
