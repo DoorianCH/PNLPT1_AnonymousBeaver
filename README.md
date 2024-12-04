@@ -28,7 +28,14 @@
   - \*참고 URL: https://wikidocs.net/85739
 
 - 박소형:
+  
+   - 챗봇 응답 로직 설계 
+   - 챗봇 응답 로직 구현 
+   - GPT 키 발급 및 모델 연결 
+   - Postman으로 동작 테스트. 
+  
 - 조은비:
+  
   - index.html 파일 생성
   - script.js 파일 생성
   - index.html -> chatbot.html 파일로 코드 이동
